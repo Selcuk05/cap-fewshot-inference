@@ -2,8 +2,6 @@ from sdks.novavision.src.base.application import Application
 from sdks.novavision.src.base.capsule import Capsule
 from sdks.novavision.src.base.logger import LoggerManager
 from sdks.novavision.src.base.model import BoundingBox
-from sdks.novavision.src.media.image import Image
-
 from capsules.FewShotInference.src.classes.encoder import (
     load_encoder,
     query_scores,
@@ -22,6 +20,7 @@ from capsules.FewShotInference.src.utils.response import (
     build_prototypical_response,
     build_siamese_response,
 )
+from capsules.FewShotInference.src.utils.frames import load_frame
 from capsules.FewShotInference.src.utils.storage import (
     download_storage_file,
     extract_storage_zip,
@@ -200,7 +199,7 @@ class FewShotRuntime(Capsule):
         self.detections = []
         incoming = self._as_detections()
         for image in self._as_images():
-            frame = Image.get_frame(img=image, redis_db=self.redis_db)
+            frame = load_frame(image, self.redis_db)
             array = frame.value
             img_uid = getattr(frame, "uID", None)
             if incoming:
