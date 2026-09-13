@@ -1,5 +1,5 @@
 from sdks.novavision.src.helper.package import PackageHelper
-from capsules.FewShotInference.src.models.PackageModel import (
+from capsules.Fewshot.src.models.PackageModel import (
     PackageModel,
     PackageConfigs,
     ConfigExecutor,

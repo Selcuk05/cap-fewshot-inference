@@ -372,4 +372,4 @@ class PackageConfigs(Configs):
 class PackageModel(Package):
     configs: PackageConfigs
     type: Literal["capsule"] = "capsule"
-    name: Literal["FewShotInference"] = "FewShotInference"
+    name: Literal["Fewshot"] = "Fewshot"

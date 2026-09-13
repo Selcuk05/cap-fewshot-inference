@@ -1,4 +1,4 @@
-# Few-Shot Inference
+# Fewshot
 
 > Runs Siamese and Prototypical encoders trained by **cap-trainer** and returns identity matches as NovaVision `Detection` objects.
 
@@ -12,7 +12,7 @@
 
 ## 1. Overview
 
-Few-Shot Inference is the matching capsule for encoders produced by Trainer's Few-Shot task. Trainer only trains a shared embedding encoder. This package loads that encoder, embeds a gallery of identities, embeds each query, and scores the query against the gallery.
+Fewshot is the matching capsule for encoders produced by Trainer's Few-Shot task. Trainer only trains a shared embedding encoder. This package loads that encoder, embeds a gallery of identities, embeds each query, and scores the query against the gallery.
 
 Pick **Siamese** or **Prototypical**. Both use the same encoder weights. Siamese scores the query against every gallery embedding and keeps the best match per identity. Prototypical replaces each identity with the mean of its gallery embeddings, then scores against those prototypes.
 

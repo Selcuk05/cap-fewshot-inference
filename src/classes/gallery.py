@@ -6,7 +6,7 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-from capsules.FewShotInference.src.classes.encoder import (
+from capsules.Fewshot.src.classes.encoder import (
     query_scores,
     scores_to_confidence,
 )

@@ -8,7 +8,7 @@ from pathlib import Path
 from sdks.novavision.src.helper.package import PackageHelper
 
 STORAGE_ROOT = Path("/storage")
-PACKAGE_ROOT = STORAGE_ROOT / "FewShotInference"
+PACKAGE_ROOT = STORAGE_ROOT / "Fewshot"
 
 
 def unwrap_storage_id(storage_value):

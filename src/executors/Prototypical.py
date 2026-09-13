@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../../../"))
 
 from sdks.novavision.src.helper.executor import Executor
-from capsules.FewShotInference.src.classes.runtime import FewShotRuntime
+from capsules.Fewshot.src.classes.runtime import FewShotRuntime
 
 
 class Prototypical(FewShotRuntime):

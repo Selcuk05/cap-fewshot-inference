@@ -2,12 +2,12 @@ from sdks.novavision.src.base.application import Application
 from sdks.novavision.src.base.capsule import Capsule
 from sdks.novavision.src.base.logger import LoggerManager
 from sdks.novavision.src.base.model import BoundingBox
-from capsules.FewShotInference.src.classes.encoder import (
+from capsules.Fewshot.src.classes.encoder import (
     load_encoder,
     query_scores,
     scores_to_confidence,
 )
-from capsules.FewShotInference.src.classes.gallery import (
+from capsules.Fewshot.src.classes.gallery import (
     class_prototypes,
     collect_gallery,
     embed_paths,
@@ -15,13 +15,13 @@ from capsules.FewShotInference.src.classes.gallery import (
     preprocess_bgr,
     rank_classes,
 )
-from capsules.FewShotInference.src.models.PackageModel import Detection, PackageModel
-from capsules.FewShotInference.src.utils.response import (
+from capsules.Fewshot.src.models.PackageModel import Detection, PackageModel
+from capsules.Fewshot.src.utils.response import (
     build_prototypical_response,
     build_siamese_response,
 )
-from capsules.FewShotInference.src.utils.frames import load_frame
-from capsules.FewShotInference.src.utils.storage import (
+from capsules.Fewshot.src.utils.frames import load_frame
+from capsules.Fewshot.src.utils.storage import (
     download_storage_file,
     extract_storage_zip,
     resolve_device,
@@ -95,7 +95,7 @@ class FewShotRuntime(Capsule):
             references = embeddings
 
         logger.info(
-            f"FewShotInference - {matching} gallery ready "
+            f"Fewshot - {matching} gallery ready "
             f"({len(classes)} identities, {len(samples)} images, device={device}, imgsz={imgsz})"
         )
         return {
