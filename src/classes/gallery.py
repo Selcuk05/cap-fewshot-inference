@@ -87,16 +87,25 @@ def image_transform(image_size):
     )
 
 
-def preprocess_bgr(image, image_size):
+def _to_uint8_rgb(image):
     if image is None or getattr(image, "size", 0) == 0:
         raise ValueError("Empty image.")
     if image.ndim == 2:
-        rgb = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
-    elif image.shape[2] == 4:
-        rgb = cv2.cvtColor(image, cv2.COLOR_BGRA2RGB)
-    else:
-        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return image_transform(image_size)(Image.fromarray(rgb))
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    elif image.shape[-1] == 4:
+        image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
+    if image.dtype != np.uint8:
+        image = np.clip(image, 0, 255).astype(np.uint8)
+    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
+def preprocess_bgr(image, image_size):
+    rgb = _to_uint8_rgb(image)
+    rgb = cv2.resize(rgb, (image_size, image_size), interpolation=cv2.INTER_LINEAR)
+    tensor = torch.from_numpy(np.ascontiguousarray(rgb)).permute(2, 0, 1).float() / 255.0
+    mean = torch.tensor(IMAGENET_MEAN).view(3, 1, 1)
+    std = torch.tensor(IMAGENET_STD).view(3, 1, 1)
+    return (tensor - mean) / std
 
 
 def _load_rgb_tensor(path, image_size):
