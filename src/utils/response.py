@@ -1,15 +1,31 @@
-
 from sdks.novavision.src.helper.package import PackageHelper
-from components.Package.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, PackageOutputs, PackageResponse, PackageExecutor, OutputImage
+from capsules.FewShotInference.src.models.PackageModel import (
+    PackageModel,
+    PackageConfigs,
+    ConfigExecutor,
+    FewShotOutputs,
+    OutputDetections,
+    Siamese,
+    SiameseResponse,
+    Prototypical,
+    PrototypicalResponse,
+)
 
 
-def build_response(context):
-    outputImage = OutputImage(value=context.image)
-    Outputs = PackageOutputs(outputImage=outputImage)
-    packageResponse = PackageResponse(outputs=Outputs)
-    packageExecutor = PackageExecutor(value=packageResponse)
-    executor = ConfigExecutor(value=packageExecutor)
-    packageConfigs = PackageConfigs(executor=executor)
-    package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
-    packageModel = package.build_model(context)
-    return packageModel
+def _build(context, executor_cls, response_cls):
+    outputs = FewShotOutputs(
+        outputDetections=OutputDetections(value=context.detections)
+    )
+    response = response_cls(outputs=outputs)
+    executor = executor_cls(value=response)
+    package_configs = PackageConfigs(executor=ConfigExecutor(value=executor))
+    package = PackageHelper(packageModel=PackageModel, packageConfigs=package_configs)
+    return package.build_model(context)
+
+
+def build_siamese_response(context):
+    return _build(context, Siamese, SiameseResponse)
+
+
+def build_prototypical_response(context):
+    return _build(context, Prototypical, PrototypicalResponse)
